@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>NGM2</title>
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-2">
+                <!-- Blank Column -->
+            </div>
+            <div class="col-8">
+                <nav class="navbar navbar-light bg-light">
+                    <a class="navbar-brand" href="//bar.utoronto.ca/">
+                        <img src="img/BAR.png" width="60" height="60" class="d-inline-block" alt="BAR Logo">
+                        <img src="img/CanAgFuel_DB_logo_small.png" width="60" height="60" class="d-inline-block" alt="NGM Logo">
+                        <big>NGM - Next-generation EMS mutation mapping</big>
+                    </a>
+                </nav>
+
+                <!-- Navigation BAR -->
+                <ul class="nav nav-pills nav-fill" id="main-tab" role="tablist">
+                    <!-- Home Page Link -->
+                    <li class="nav-item">
+                        <a class="nav-link active" id="pills-home-tab" data-toggle="pill" role="tab" href="#pills-home" aria-controls="pills-home" aria-selected="true">Preprocess/Upload Data</a>
+                    </li>
+                    <!-- Chromosome Selection Link -->
+                    <li class="nav-item">
+                        <a class="nav-link" id="pills-map-tab" data-toggle="pill" role="tab" href="#pills-map" aria-controls="pills-map" aria-selected="false">Map to Chromosome</a>
+                    </li>
+                    <!-- Mapping and fine tuning -->
+                    <li class="nav-item">
+                        <a class="nav-link" id="pills-fine-map-tab" data-toggle="pill" role="tab" href="#pills-fine-map" aria-controls="pills-fine-map" aria-selected="false">Fine Map and Annotate</a>
+                    </li>
+                </ul>
+
+                <!-- Pages for Navigation BAR -->
+                <div class="tab-content" id="pills-tab-content">
+                    <!-- Home page text -->
+                    <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
+                        <br>
+                        <!-- A Summary of how to use NGM -->
+                        <h4>Welcome to the NGM homepage!</h4>
+                        <p>
+                            NGM allows for the rapid localization of recessive EMS induced mutations within an F2 mapping
+                            population that has been pooled and sequenced en masse using a next-generation sequencing platform.
+                        </p>
+                        <h4>Introduction:</h4>
+                        <p>
+                            NGM will process an alignment (BAM format) of your F2 sequence data to your reference genome to
+                            generate an NGM file for analysis. Once you have sequenced your pooled F2 population, map your
+                            fastq data to the reference genome and upload your resulting BAM file in the "Upload Data" section below.
+                        </p>
+                        <h4>Notes:</h4>
+                        <ol>
+                            <li>We recommend <a href="https://sourceforge.net/projects/bio-bwa/files/">BWA</a> for mapping.</li>
+                            <li>You can use our <a href="./bwaNGM">bwaNGM</a> script to simplify mapping with BWA.</li>
+                            <li>If your BAM file is too large (>5Gb) or would prefer, you can use the <a href="./bam2ngm">
+                                bam2ngm</a> script and upload the NGM file.</li>
+                            <li>The bam2ngm script depends upon <a href="http://www.htslib.org/download/">bcftools</a> to run.</li>
+                            <li>For mapping to Arabidopsis Columbia, the <a href="https://www.arabidopsis.org/download/index-auto.jsp?dir=%2Fdownload_files%2FGenes%2FTAIR10_genome_release%2FTAIR10_chromosome_files">
+                                TAIR10_chr_all.fas</a> file should be used.</li>
+                        </ol>
+                        <hr>
+                    </div>
+                    <!-- Chromosome Select page -->
+                    <div class="tab-pane fade" id="pills-map" role="tabpanel" aria-labelledby="pills-map-tab">
+                        <br>
+                        <!-- A form to update histogram and move on to the next step -->
+                        <form>
+                            Update bin size for histograms: <input type="text" name="histogram-size" id="histogram-size">
+                            kb <input type="button" name="update-histogram" id="update-histogram" value="Update histogram">
+                            <br><br>
+                            Select chromosome for further exploration and <input type="button" name="submit-map" id="submit-map" value="Submit">
+                        </form>
+                        <hr>
+                    </div>
+                    <!-- Fine tunning page -->
+                    <div class="tab-pane fade" id="pills-fine-map" role="tabpanel" aria-labelledby="pills-fine-map-tab">
+                        This is the fine tuning page!
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-2">
+                <!-- Blank Column -->
+            </div>
+        </div>
+    </div>
+</body>
+</html>
