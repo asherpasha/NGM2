@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>NGM: Quick Start Guide</title>
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-2">
+                <!-- Blank Column -->
+            </div>
+            <div class="col-8">
+                <nav class="navbar navbar-light">
+                    <a class="navbar-brand" href="//bar.utoronto.ca/">
+                        <img src="img/BAR.png" width="60" height="60" class="d-inline-block" alt="BAR Logo">
+                        <img src="img/CanAgFuel_DB_logo_small.png" width="60" height="60" class="d-inline-block" alt="NGM Logo">
+                        NGM - Next-generation EMS mutation mapping
+                    </a>
+                </nav>
+                <br>
+                <h4>Quick Start Guide</h4>
+                <ol>
+                    <li>
+                        Create a mapping population of 50 or more F2s positive for the phenotype of your recessive, EMS induced mutation. Your mutagenesis line should be that used in creating
+                        the reference genome. (eg. Arabidopsis: Columbia EMS x Landsberg mapping).
+                    </li>
+                    <li>
+                        Next-gen sequence pooled genomic DNA from all individuals in this population.
+                    </li>
+                    <li>
+                        Map your next-gen sequence data to one of the references in the drop down list on the start page using MAQ or BWA (or some other BAM compliant tool) and call SNPs with
+                        "maq cns2snp" or "samtools pileup -vcf" respectively. (note: if using MAQ, you also need "maq pileup" results.)
+                    </li>
+                    <li>
+                        Preprocess the resulting SNP data using either the Java applet or appropriate Perl script on the start page.
+                    </li>
+                    <li>
+                        Upload the preprocessed "emap" file and perform NGM.
+                    </li>
+                </ol>
+            </div>
+            <div class="col-2">
+                <!-- Blank Column -->
+            </div>
+        </div>
+    </div>
+</body>
+</html>

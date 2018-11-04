@@ -2,15 +2,287 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>FAQ</title>
+    <title>NGM FAQ</title>
 </head>
 <body>
-    <nav class="navbar navbar-light bg-light">
-        <a class="navbar-brand" href="#">
-            <img src="img/BAR.png" width="30" height="30", class="d-inline-block align-top" alt="BAR Logo">
-            FAQs
-        </a>
-    </nav>
-    Frequently Asked Questions or other documentations goes here!
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-2">
+            <!-- Blank Column -->
+        </div>
+        <div class="col-8">
+            <nav class="navbar navbar-light">
+                <a class="navbar-brand" href="//bar.utoronto.ca/">
+                    <img src="img/BAR.png" width="60" height="60" class="d-inline-block" alt="BAR Logo">
+                    <img src="img/CanAgFuel_DB_logo_small.png" width="60" height="60" class="d-inline-block" alt="NGM Logo">
+                    NGM - Next-generation EMS mutation mapping
+                </a>
+            </nav>
+            <br>
+            <h4>Frequently Asked Questions:</h4>
+            <br>
+            <h4><u>Preprocessing</u></h4>
+            <b>Does NGM work in species other than Arabidopsis?</b><br>
+            <p>
+                Theoretically yes, it should work for any species with a complete genome and a usable mapping population. It has been used to successfully map dozens of Arabidopsis
+                mutations and does allow for data generated from several different species genomes.
+            </p>
+
+            <b>Can I use a mapping line of an ecotype other than Landsberg?</b>
+            <p>
+                Definitely, though its yet to be done in practice and Columbia as the mutant line is needed.  However, the principal for NGM is exactly the same.  NGM will use the natural
+                variation existing between the two lines to identify the Columbia specific non-recombinant region as a SNP desert.
+            </p>
+
+            <b>Can I use a mutagenesis line of an ecotype other than Columbia?</b>
+            <p>
+                Yes, NGM now allows for a number of different Arabidopsis ecotypes as provided by the 1000 genomes project.
+            </p>
+
+            <b>The genomic background I'm mapping against is not available in your drop down, can I still perform NGM?</b>
+            <p>
+                Yes, you just need to send us your genomic fasta file, one sequence per chromosome, along with an associated GFF3 gene model file where the chromosome numbers in the
+                GFF correspond to the chromosome numbers in the fasta annotation line of the genome.  These should all be a single integer with no extra characters (eg. "Chr").
+                You will also need to provide the source URL for both files so that other users can make use of the same data.
+            </p>
+
+            <b>Can I map a dominant mutation?</b><br>
+            <p>
+                Again, theoretically yes.  You would need to take a larger population of F2s to F3, saving F2 tissue from each individual. F2 tissue would then be taken for
+                corresponding F3 populations no longer segregating for wild-type.
+            </p>
+
+            <b>Can I map a non-EMS induced mutation</b><br>
+            <p>
+                While NGM doesn't support indel polymorphism annotation or the use of indels as de novo generated markers, the bulk segregation stage could potentially still
+                be used to rough map the mutation. Using an indel calling program against this region in your BAM file and intersecting with relevant GFF data could be used to
+                generate a short-list of candidate genes.
+            </p>
+
+            <b>Should I back-cross or use F3 tissue?</b><br>
+            <p>
+                We advise against it.  In cases where this has been done, the SNP signal corresponding to EMS derived discordance appears diluted, peak identification and
+                annotation issues crop up and mutation detection is more difficult.
+            </p>
+
+            <b>Can I use an EMS mutagenized introgression line or mutant background and find enhancers/suppressors?</b><br>
+            <p>
+                Yes, although linkage with the background mutation on the same chromosome may render the fine mapping step ineffectual. You should
+                try to approximate the non-recombinant region using the SNP desert in the SNP frequency histogram if you encounter problems.
+            </p>
+
+            <b>How do I create a SNP file?</b><br>
+            <p>
+                Generate a SNP file by mapping your NGS data against a reference genome.  NGM supports MAQ,SAM and VCF format data. Using samtools to
+                create a snp file from pileup data (Samtools 0.16 or earlier) can be accomplished with:
+                <pre>
+	                "samtools pileup -vcf reference.fasta alignment.bam > out.pileup"
+    	        </pre>
+                where your reference matches one of the available references in the drop down and alignment.bam is created using any BAM compliant mapping
+                method.
+            </p>
+            <p>
+                As of 2013 it is recommended to use a VCF/BCF file as generated with the below command and converted to an NGM file using the Perl script provided on the NGM start page.
+            <pre>
+		        "samtools mpileup -E -ugf reference.fasta alignment.bam | bcftools view -bvgN - > output.bcf"
+		    </pre>
+
+            </p>
+            <p>
+                Using MAQ, preprocessing  requires a pileup file and a cns2snp file generated using:
+            <pre>
+            	maq pileup chr.bfa align.map > maq.pileup
+            	maq cns2snp in.cns > out.snp
+        	</pre>
+            </p>
+
+            <b>Should I filter my SNP file before preprocessing?</b><br>
+            <p>
+                We advise strongly against it unless you are working with a NGM file generated from BCF data. With samtools v0.16 or earlier, NGM seems to work best with the default MAQ/Samtools output and the conservative filters provided on the start page.
+                Moreover, aggressive filtering may remove the actual causal mutation such that your results are sunk before you even begin.
+                NGM allows the user to remove filters at the final annotation stage in order to liberally consider all possible SNPs in
+                the event that a strong signal isn't obtained.
+            </p>
+
+            <b>I'm having trouble with the applet.</b><br>
+            <p> Yes, on some systems, issues with the browser, Java version or browser preferences are unfortunately common.  Our best advice is
+                to make sure cookies, java and java script are turned on and you click "Allow" at the Security dialog.  Other than that, make sure your java
+                is up to date, and you try different browsers and operating systems if available.  If this fails, Perl scripts are available for download
+                preprocessing your file to "emap" format locally.
+            </p>
+            <p> As the applet is specific to pre-BCF data, it is recommended to not use the applet but use the Perl script for processing BCF data on the home page.
+                The applet will be discontinued in the near future.
+            </p>
+
+            <b>What is this preprocessing thing?</b><br>
+            <p>
+                NGM uses a chastity statistic pegged to the reference genome called discordant chastity to classify SNP allelism and discordance with
+                the reference genome.  This information is added to the SNP file and extraneous data removed before compressing the results for upload.
+            <p>
+
+                <b>What is an emap file?</b><br>
+            <p>
+                Emap is the prototype file extension and remains vestigial.  ".ngm" is the extension generated by the BCF2NGM Perl script for processing BCF/VCF data.
+            </p>
+
+            <br><h4><u>Bulk segregant analysis</u></h4>
+
+            <b>I don't see a SNP desert in any of the histograms.</b><br>
+            <p>
+                In the Arabidopsis x Landberg mappings to date, the very reproducible natural variation pattern can be seen in the examples provided
+                on the NGM start page.  Visible SNP deserts as they appear in Arabidopsis (Col) x Arabidopsis (Ler) are usually very apparent.  You
+                may try using more stringent filters to help improve the visibility of the depletion.
+            </p>
+
+            <b>I still don't see a SNP desert in my histograms.</b><br>
+            <p>
+                First, make sure your experimental design is accurate with respect to the reference genome mapped and that chosen for Annotation.
+                If your convinced your seeing a real natural variation pattern, but perhaps noisy, then run NGM against each chromosome and note the max
+                ratio obtained at the default k-value and smallest kernel size.  The max ratio on the non-recombinant chromosome will frequently
+                be orders of magnitude larger than the other chromosomes.
+            </p>
+
+            <br><h4><u>Chastity band ratios</u></h4>
+
+            <b>Will my mutation be at the top of a peak?</b><br>
+            <p>
+                Ideally yes, but NGM uses a ratio taken from two smoothed estimations of SNP frequency to localize the mutation.
+                Thus, depending on the available markers,signal strength and parameters used this may not always be the case.
+                Sometimes the causal mutation will be slightly to right or left of a peak.  Also, using too fine a kernel may cause
+                "peak shifts" away from the actual mutation.
+            </p>
+
+            <b>Does the height of the peak reflect the probability?</b>
+            <p>
+                No, any peaks are a result of taking the ratio of two estimations and have no statistical likelihood associated with them.
+                False peaks and shifted over-fit peaks are possible, especially as you approach the telomere.
+            </p>
+
+            <b>What effect do telomeres have on peak identification</b><br>
+            <p>
+                Unfortunately, if your mutation is near a telomere, the use of peaks for localizing the causal mutation becomes
+                considerably less accurate.  This is because you don't get multiple recombination events on either side of the mutation
+                but one-sided events that result in a drop-off in recombination as you approach the telomere.  In this case, the entire
+                telomere should be annotated based on the depletion seen in the frequency histogram.
+            </p>
+
+            <b>Is every peak a potential mutation?</b>
+            <p>
+                No, there should be one best peak that approximates your causal mutation.
+            </p>
+
+            <b>I don't see any distinct peaks after running the chastity belt partitioning</b><br>
+            <p>
+                Click on detailed view to see NGM run at multiple parameter settings.
+            </p>
+
+            <b>I think I see a strong peak, what do I do?</b><br>
+            <p>
+                Click on detailed view to see NGM run at multiple parameter settings to try and fine tune the peak.
+            </p>
+
+            <b>Ok, I have a strong peak at the default settings.</b><br>
+            <p>
+                Congrats, you likely nailed it. Click on the arrow beside the kernel size of choice.
+            </p>
+
+            <b>I've clicked on detailed view and I get roughly the same peak across the parameter array.</b><br>
+            <p>
+                An unambigous result is good, pick one and fine tune your annotation.
+            </p>
+
+            <b>How do I use these parameter settings?</b><br>
+            <p>
+                Generally, lower k-values will incorporate more marker information and are preferred over large k-values.
+                Similarly, smaller kernel values will apply finer and finer estimations that may overfit the data such that
+                larger kernel sizes are better.  One should raise the k-value to generate better band separation or lower
+                kernel values to improve refinement of existing peaks (see below).
+            </p>
+
+            <b>I've got peaks at multiple places and multiple peaks within a single chromosome.</b><br>
+            <p>
+                Begin at the lowest k value of k=5 in the left column.  Proceed from the largest kernel size down to the smallest looking for a
+                distinctive peak.  If a peak "shifts" or appears suddenly at lower kernel sizes without having precedence at larger kernel sizes, than move to
+                the next greater k value and repeat.  Stop when you see a well defined peak possessing precedence at larger kernel sizes.
+            </p>
+
+            <b>The progression from k to smaller kernel sizes doesn't really work.</b><br>
+            <p>
+                See if a quorum exists at larger kernel sizes for peak position.  Annotate SNPs within a large window in that region.
+            </p>
+
+            <b>Ya .. I just don't see a strong peak.</b><br>
+            <p>
+                Identify the non-recombinant region on the histogram and annotate the entire corresponding region in the fine mapping.
+                Gradually move the red sliders inwards to obtain a short-list.
+                Depending on the size of your mapping population, mutation position  and number of recombination events,
+                the non-recombinant region often takes on a parabolic shape with the causal mutation at the apex.
+            </p>
+
+            <b>Whats with all the peaks and the tweaking, can't this fit into a probalistic framework?</b><br>
+            <p>
+                Probably, but the supervised empirical approach of NGM is analogous to traditional fine mapping by design and
+                works very well as is.  The application of chastity belts to more complicated mapping problems is ongoing research and may
+                incorporate a more probabilistic approach though.
+            </p>
+
+            <br><h4><u>Annotation</u></h4>
+
+            <b>I just see a swirly ball after adjusting my annotation filters.</b><br>
+            <p>
+                The adjustment of annotation filters can take several minutes.  Usually this is a matter of being patient but see below.
+            </p>
+
+            <b>I don't see my annotation details. Why is that?</b><br>
+            <p>
+                This should hopefully be fixed but is most often the result of the first column of your ".emap" file containing strings like "Chr".  It
+                should be a single integer corresponding to the chromosome number.
+            </p>
+
+            <b>When I lower my discordance cutoff, I see mutations with no base change.  Why is this?</b><br>
+            <p>
+                This is a consequence of Samtools' use of ambiguity codes at polymorphic loci with lower chastity scores.
+                As a result, NGM ignores the ambiguity code and will consequently filter the SNP as a transversion.  Pulling the major allele
+                information from such positions is on the TODO list.  If you have dirty data and are using a lowered discordance cutoff than you should
+                uncheck the transversion filter box and consider all C->Y and G->R changes as (potentially non-synonymous) transitions.
+            </p>
+
+            <b>Why are transversions being filtered out?</b><br>
+            <p>
+                EMS mutagenesis deaminates cytosines to tyrosines, causing transition mutations at a rate over 99% in Arabidopsis and very high in
+                other species.  Thus the causal mutation is highly likely to be a transition.
+            </p>
+
+            <b>Why are there filter settings in the annotation region?</b><br>
+            <p>
+                If you have poor mapping quality or coverage, you can remove or loosen the filter settings to see if potential candidates exist
+                with more lenient filtration.
+            </p>
+
+            <b>I get multiple potential candidate mutations.  Now what?</b><br>
+            <p>
+                You should prioritize multiple candidates for testing in the lab.  You should consider 1) the proximity of the mutation
+                to the peak and/or the apex of the non-recombinant depletion, 2) the BLOSUM score significance for residue change, 3) the
+                annotation of the gene in the context of your analysis, 4) the position of the mutation within the gene identified and 5)
+                whether the mutated position is a conserved position in other ecotypes/strains of the same species.
+            </p>
+
+            <b>Are these other mutations I see real?</b><br>
+            <p>
+                Likely yes, most are probably the EMS induced changes that have been carried along due to linkage with the causal mutation.  They
+                may also reflect polymorphic differences between your lab line and the sequenced reference line.
+            </p>
+
+            <b>What is the BLOSUM score about?</b>
+            <p>
+                The BLOSUM score is pulled from the BLOSUM100 amino acid substition matrix.  Roughly speaking, the larger the number, the more
+                dramatic the substition and likelihood for a disruptive effect on the peptide.
+            </p>
+        </div>
+        <div class="col-2">
+            <!-- Blank Column -->
+        </div>
+    </div>
+</div>
 </body>
 </html>
