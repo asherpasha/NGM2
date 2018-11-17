@@ -27,11 +27,11 @@
                     </li>
                     <!-- Chromosome Selection Link -->
                     <li class="nav-item">
-                        <a class="nav-link" id="pills-map-tab" data-toggle="pill" role="tab" href="#pills-map" aria-controls="pills-map" aria-selected="false">Map to Chromosome</a>
+                        <a class="nav-link disabled" id="pills-map-tab" data-toggle="pill" role="tab" href="#pills-map" aria-controls="pills-map" aria-selected="false">Map to Chromosome</a>
                     </li>
                     <!-- Mapping and fine tuning -->
                     <li class="nav-item">
-                        <a class="nav-link" id="pills-fine-map-tab" data-toggle="pill" role="tab" href="#pills-fine-map" aria-controls="pills-fine-map" aria-selected="false">Fine Map and Annotate</a>
+                        <a class="nav-link disabled" id="pills-fine-map-tab" data-toggle="pill" role="tab" href="#pills-fine-map" aria-controls="pills-fine-map" aria-selected="false">Fine Map and Annotate</a>
                     </li>
                 </ul>
 
@@ -62,6 +62,30 @@
                             <li>For mapping to Arabidopsis Columbia, the <a href="https://www.arabidopsis.org/download/index-auto.jsp?dir=%2Fdownload_files%2FGenes%2FTAIR10_genome_release%2FTAIR10_chromosome_files">
                                 TAIR10_chr_all.fas</a> file should be used.</li>
                         </ol>
+                        <h4>Upload data:</h4>
+                        <form>
+                            <input type="file" name="ngmFile">
+                            <br>
+                            Select gene reference you used for mapping:
+                            <select name="reference" id="reference">
+                                <optgroup label="Arabidopsis">
+                                    <option value="Araport11" selected>Col-0 (Araport11)</option>
+                                    <option value="TAIR10">Col-0 (TAIR10)</option>
+                                    <option value="Ler0">Ler-0 (19 Genomes)</option>
+                                    <option value="Ws">Ws-0 (19 Genomes)</option>
+                                    <option value="C24">C24</option>
+                                </optgroup>
+                                <optgroup label="Other species">
+                                    <option value="FlyBase">D. melanogaster (FlyBase)</option>
+                                    <option value="SGD">S. cerevisiae (SGD)</option>
+                                    <option value="GeneDB">S. pombe (GeneDB)</option>
+                                    <option value="WormBase">C. elegans (WormBase)</option>
+                                </optgroup>
+                            </select>
+                            <br>
+                            <input type="button" name="upload" id="upload" value="Upload and analyse">
+                            <input type="reset" name="upload-reset" id="upload-reset" value="Reset">
+                        </form>
                         <hr>
                         Click <a href="description.html">here</a> for details on the application of NGM.<br>
                         Click <a href="FAQ.html">here</a> for the FAQ.<br>
