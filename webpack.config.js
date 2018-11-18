@@ -23,11 +23,12 @@ module.exports = {
       {
         test: /\.scss$/,
         use: [
-          'sytle-loader',
+          'style-loader',
           'css-loader',
           'sass-loader',
         ],
-      }, {
+      },
+      {
         test: /\.css$/,
         use: [
           'style-loader',
@@ -40,7 +41,7 @@ module.exports = {
           {
             loader: 'file-loader',
             options: {
-              name: '[name].[ext]',
+              name: 'images/[hash].[ext]',
             },
           }
         ],

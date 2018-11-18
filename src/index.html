@@ -96,12 +96,14 @@
                         <br>
                         <!-- A form to update histogram and move on to the next step -->
                         <form>
+                            Session Id: <span id="session-id"></span><br>
                             Update bin size for histograms: <input type="text" name="histogram-size" id="histogram-size">
                             kb <input type="button" name="update-histogram" id="update-histogram" value="Update histogram">
                             <br><br>
                             Select chromosome for further exploration and <input type="button" name="submit-map" id="submit-map" value="Submit">
+                            <hr>
+                            <div id="chromosomes"></div>
                         </form>
-                        <hr>
                     </div>
                     <!-- Fine tunning page -->
                     <div class="tab-pane fade" id="pills-fine-map" role="tabpanel" aria-labelledby="pills-fine-map-tab">
