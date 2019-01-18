@@ -2,6 +2,7 @@
 // Bootstrap imports
 import 'bootstrap/dist/js/bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import * as d3 from 'd3';
 
 
 // App url
@@ -87,12 +88,53 @@ uploadButton.onclick = () => {
       }
     });
 
-  alert(`Reference: ${reference.value}`);
+  console.log(`Reference: ${reference.value}`);
 };
+
+// Table
+const rowTemplate = d => `
+    <td>${d.Chromosome}</td>
+    <td>${d.Position}</td>
+    <td>${d.Ref_Base}</td>
+    <td>${d.SNP_Base}</td>
+    <td>${d.Dept}</td>
+    <td>${d.Discord_chastity}</td>
+    <td>${d.Accession}</td>
+    <td>${d.Tag}</td>
+    <td>${d.Strand}</td>
+    <td>${d.Ref_Codon}</td>
+    <td>${d.SNP_Codon}</td>
+    <td>${d.AA_Change}</td>
+    <td>${d.Blosum_100}</td>
+  `;
 
 // Select a chromosome
 submitMap.onclick = () => {
   // Enable
   pillsFineMapTab.classList.remove('disabled');
   pillsFineMapTab.click();
+
+  // Source for graph: https://bl.ocks.org/EfratVil/92f894ac0ba265192411e73f633a3e2f
+  // Source for Table: https://codepen.io/pj_/post/d3-table-with-template-literals
+
+  d3.tsv(`${baseUrl}/cgi-bin/get_snp_data.cgi`).then((data) => {
+    const table = d3.select('#fine-map-table')
+      .append('table');
+
+    table.attr('class', 'table');
+
+    table.append('thead')
+      .selectAll('th')
+      .data(data.columns)
+      .enter()
+      .append('th')
+      .text(d => d);
+
+    table.append('tbody')
+      .selectAll('tr')
+      .data(data)
+      .enter()
+      .append('tr')
+      .html(rowTemplate);
+  });
 };
