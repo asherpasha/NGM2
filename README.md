@@ -12,7 +12,7 @@ npm install
 ```
 3. Run development server:
 ```bash
-npm run develop
+npm run develop --depth 999
 ```
 4. Export production files for the BAR:
 ```bash
