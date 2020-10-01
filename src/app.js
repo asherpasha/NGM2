@@ -3,7 +3,10 @@
 import 'bootstrap/dist/js/bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './style.css';
-import * as d3 from 'd3';
+// import * as d3 from 'd3';
+
+// d3
+const d3 = require('d3');
 
 // App url
 const baseUrl = '//bar.utoronto.ca/~asher/ngm2';
@@ -79,7 +82,7 @@ uploadButton.onclick = () => {
 
   // Get data
   fetch(`${baseUrl}/cgi-bin/process_data.cgi`)
-    .then(response => response.json())
+    .then((response) => response.json())
     .then((response) => {
       if (response.result === 'success') {
         updateChromosomes(response);
@@ -92,7 +95,7 @@ uploadButton.onclick = () => {
 };
 
 // Table
-const rowTemplate = d => `
+const rowTemplate = (d) => `
     <td>${d.Chromosome}</td>
     <td>${d.Position}</td>
     <td>${d.Ref_Base}</td>
@@ -128,7 +131,7 @@ submitMap.onclick = () => {
       .data(data.columns)
       .enter()
       .append('th')
-      .text(d => d);
+      .text((d) => d);
 
     table.append('tbody')
       .selectAll('tr')
@@ -167,8 +170,8 @@ submitMap.onclick = () => {
         const s = d3.event.selection || x2.range();
         x.domain(s.map(x2.invert, x2));
         focus.selectAll('.dataPoint')
-          .attr('cx', d => x(d.Position))
-          .attr('cy', d => y(d.Discord_chastity));
+          .attr('cx', (d) => x(d.Position))
+          .attr('cy', (d) => y(d.Discord_chastity));
         focus.select('.x-axis').call(xAxis);
         svg.select('.zoom').call(zoom.transform, d3.zoomIdentity
           .scale(width / (s[1] - s[0]))
@@ -189,12 +192,11 @@ submitMap.onclick = () => {
         const t = d3.event.transform;
         x.domain(t.rescaleX(x2).domain());
         focus.selectAll('.dataPoint')
-          .attr('cx', d => x(d.Position))
-          .attr('cy', d => y(d.Discord_chastity));
+          .attr('cx', (d) => x(d.Position))
+          .attr('cy', (d) => y(d.Discord_chastity));
         focus.select('.x-axis').call(xAxis);
         context.select('.brush').call(brush.move, x.range().map(t.invertX, t));
       });
-
 
     svg.append('defs').append('clipPath')
       .attr('id', 'clip')
@@ -224,8 +226,8 @@ submitMap.onclick = () => {
       .attr('class', 'dataPoint')
       .attr('r', 4)
       .style('opacity', 0.7)
-      .attr('cx', d => x(d.Position))
-      .attr('cy', d => y(d.Discord_chastity));
+      .attr('cx', (d) => x(d.Position))
+      .attr('cy', (d) => y(d.Discord_chastity));
 
     focus.append('g')
       .attr('class', 'axis x-axis')
@@ -268,8 +270,8 @@ submitMap.onclick = () => {
       .attr('class', 'messageContext')
       .attr('r', 3)
       .style('opacity', 0.6)
-      .attr('cx', d => x2(d.Position))
-      .attr('cy', d => y2(d.Discord_chastity));
+      .attr('cx', (d) => x2(d.Position))
+      .attr('cy', (d) => y2(d.Discord_chastity));
 
     context.append('g')
       .attr('class', 'axis x-axis')
